@@ -33,7 +33,7 @@ async function register(request: FastifyRequest, reply: FastifyReply) {
     throw err;
   }
 
-  return reply.status(201).send({ user });
+  return reply.status(201).send(user);
 }
 
 export { register };
