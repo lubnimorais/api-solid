@@ -17,7 +17,7 @@ interface IRegisterUserResponse {
 }
 
 class RegisterUserCase {
-  constructor(private usersRepository: IUsersRepository) { }
+  constructor(private usersRepository: IUsersRepository) {}
 
   public async execute({
     name,
