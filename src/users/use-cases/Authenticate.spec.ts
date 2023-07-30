@@ -37,12 +37,11 @@ describe('Authenticate Use Case', () => {
   });
 
   it('should not be able to authenticate with wrong email', async () => {
-    expect(
-      async () =>
-        await sut.execute({
-          email: faker.internet.email(),
-          password: faker.internet.password(),
-        }),
+    await expect(() =>
+      sut.execute({
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+      }),
     ).rejects.toBeInstanceOf(InvalidCredentialsError);
   });
 
@@ -56,12 +55,11 @@ describe('Authenticate Use Case', () => {
       password_hash: await hash(password, 6),
     });
 
-    expect(
-      async () =>
-        await sut.execute({
-          email,
-          password: faker.internet.password(),
-        }),
+    await expect(() =>
+      sut.execute({
+        email,
+        password: faker.internet.password(),
+      }),
     ).rejects.toBeInstanceOf(InvalidCredentialsError);
   });
 });
