@@ -5,6 +5,7 @@ interface ICheckInsRepository {
     gym_id,
     user_id,
   }: Prisma.CheckInUncheckedCreateInput): Promise<CheckIn>;
+  findByUserIdOnDate(userId: string, date: Date): Promise<CheckIn | null>;
 }
 
 export { ICheckInsRepository };
