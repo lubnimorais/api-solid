@@ -1,9 +1,11 @@
 import { CheckIn } from '@prisma/client';
 
 import { ICheckInsRepository } from '../repositories/ICheckInsRepository';
-import { IGymsRepository } from '../repositories/IGymsRepository';
+import { IGymsRepository } from '../../gym/repositories/IGymsRepository';
 import { ResourceNotFoundError } from './errors/ResourceNotFoundError';
-import { getDistanceBetweenCoordinates } from '../getDistanceBetweenCoordinates';
+import { getDistanceBetweenCoordinates } from '../../utils/getDistanceBetweenCoordinates';
+import { MaxNumbersOfCheckInsError } from './errors/MaxNumbersOfCheckInsError';
+import { MaxDistanceError } from './errors/MaxDistanceError';
 
 interface IRequest {
   userId: string;
@@ -50,7 +52,7 @@ class CheckInUseCase {
     const MAX_DISTANCE_IN_KILOMETERS = 0.1;
 
     if (distance > MAX_DISTANCE_IN_KILOMETERS) {
-      throw new Error();
+      throw new MaxDistanceError();
     }
 
     const checkInOnSameDay = await this.checkInsRepository.findByUserIdOnDate(
@@ -59,7 +61,7 @@ class CheckInUseCase {
     );
 
     if (checkInOnSameDay) {
-      throw new Error();
+      throw new MaxNumbersOfCheckInsError();
     }
 
     const checkIn = await this.checkInsRepository.create({

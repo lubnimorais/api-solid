@@ -26,6 +26,16 @@ class InMemoryCheckInsRepository implements ICheckInsRepository {
     return checkIn;
   }
 
+  public async findById(checkInId: string): Promise<CheckIn | null> {
+    const checkIn = this.items.find((item) => item.id === checkInId);
+
+    if (!checkIn) {
+      return null;
+    }
+
+    return checkIn;
+  }
+
   public async findByUserIdOnDate(
     userId: string,
     date: Date,
@@ -47,6 +57,29 @@ class InMemoryCheckInsRepository implements ICheckInsRepository {
     }
 
     return checkInOnSameDate;
+  }
+
+  public async findManyByUserId(
+    userId: string,
+    page: number,
+  ): Promise<CheckIn[]> {
+    return this.items
+      .filter((item) => item.user_id === userId)
+      .slice((page - 1) * 20, page * 20);
+  }
+
+  public async countByUserId(userId: string): Promise<number> {
+    return this.items.filter((item) => item.user_id === userId).length;
+  }
+
+  public async save(checkIn: CheckIn): Promise<CheckIn> {
+    const checkInIndex = this.items.findIndex((item) => item.id === checkIn.id);
+
+    if (checkInIndex >= 0) {
+      this.items[checkInIndex] = checkIn;
+    }
+
+    return checkIn;
   }
 }
 

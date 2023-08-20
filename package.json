@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev:server": "tsx watch src/server.ts",
+    "dev:server": "tsx watch src/shared/infra/http/server.ts",
     "start": "node build/server.js",
     "build": "tsup src --out-dir build",
     "lint": "eslint src --ext .ts,.tsx --fix",
