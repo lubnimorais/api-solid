@@ -1,24 +1,17 @@
+import { makeGetUserProfileUseCase } from '@/users/use-cases/factories/MakeGetUserProfileUseCase';
 import { FastifyRequest, FastifyReply } from 'fastify';
 
 async function profile(request: FastifyRequest, reply: FastifyReply) {
-  await request.jwtVerify();
+  const getUserProfile = makeGetUserProfileUseCase();
 
-  console.log(request.user);
-  // try {
-  //   const authenticateUseCase = makeAuthenticateUseCase();
+  const { user } = await getUserProfile.execute({ id: request.user.sub });
 
-  //   await authenticateUseCase.execute({ email, password });
-  // } catch (err) {
-  //   if (err instanceof InvalidCredentialsError) {
-  //     return reply.status(400).send({
-  //       message: err.message,
-  //     });
-  //   }
-
-  //   throw err;
-  // }
-
-  reply.status(200).send();
+  reply.status(200).send({
+    user: {
+      ...user,
+      password_hash: undefined,
+    },
+  });
 }
 
 export { profile };
