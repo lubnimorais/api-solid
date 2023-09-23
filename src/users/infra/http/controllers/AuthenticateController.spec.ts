@@ -7,7 +7,7 @@ import { afterAll, beforeAll, describe, expect } from 'vitest';
 import { it } from 'vitest';
 
 
-describe('Register Controller (e2e)', () => {
+describe('Authenticate Controller (e2e)', () => {
   beforeAll(async () => {
     // para o app estar pronto
     await app.ready()
@@ -18,8 +18,8 @@ describe('Register Controller (e2e)', () => {
     await app.close()
   })
 
-  it('Should be able to register', async () => {
-    const response = await request(app.server)
+  it('Should be able to authenticate', async () => {
+    await request(app.server)
       .post('/users')
       .send({
         name: 'John Doe',
@@ -27,7 +27,17 @@ describe('Register Controller (e2e)', () => {
         password: '123456',
       });
 
-    expect(response.statusCode).toEqual(201)
+    const response = await request(app.server)
+      .post('/sessions')
+      .send({
+        email: 'johndoe@example.com',
+        password: '123456',
+      });
+
+    expect(response.statusCode).toEqual(200)
+    expect(response.body).toEqual({
+      token: expect.any(String)
+    })
   })
 })
 
