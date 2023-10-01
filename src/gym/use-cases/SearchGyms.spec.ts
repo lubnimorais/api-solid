@@ -13,7 +13,7 @@ describe('Search Gyms Use Case', () => {
     sut = new SearchGymsUseCase(gymsRepository);
   });
 
-  it('should be able to search for gyms', async () => {
+  it('should be able to search gyms by title', async () => {
     await gymsRepository.create({
       title: 'JavaScript Gym',
       description: null,

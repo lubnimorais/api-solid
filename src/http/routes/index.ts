@@ -1,16 +1,21 @@
 import { FastifyInstance } from 'fastify';
 
-import { register } from '@/users/infra/http/controllers/RegisterController';
-import { authenticate } from '@/users/infra/http/controllers/AuthenticateController';
-import { profile } from '@/users/infra/http/controllers/ProfileController';
-import { verifyJWT } from '../verify-jwt';
+import { usersRoutes } from '@/users/infra/http/routes';
+import { gymsRoutes } from '@/gym/infra/http/routes';
+import { checkInsRoutes } from '@/check-ins/infra/http/routes';
 
 async function appRoutes(app: FastifyInstance) {
-  app.post('/users', register);
-  app.post('/sessions', authenticate);
+  app.register(usersRoutes, {
+    prefix: '/users',
+  });
 
-  /** Authenticated */
-  app.get('/me', { onRequest: [verifyJWT] }, profile);
+  app.register(gymsRoutes, {
+    prefix: '/gyms',
+  });
+
+  app.register(checkInsRoutes, {
+    prefix: '/check-ins',
+  });
 }
 
 export { appRoutes };

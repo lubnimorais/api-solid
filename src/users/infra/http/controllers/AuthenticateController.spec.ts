@@ -28,7 +28,7 @@ describe('Authenticate Controller (e2e)', () => {
       });
 
     const response = await request(app.server)
-      .post('/sessions')
+      .post('/users/sessions')
       .send({
         email: 'johndoe@example.com',
         password: '123456',
