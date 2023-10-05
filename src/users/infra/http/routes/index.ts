@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 
-import { verifyJWT } from '@/http/verify-jwt';
+import { verifyJWT } from '@/shared/infra/http/middleware/verify-jwt';
 
 import { register } from '@/users/infra/http/controllers/RegisterController';
 import { authenticate } from '@/users/infra/http/controllers/AuthenticateController';

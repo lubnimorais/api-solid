@@ -4,9 +4,12 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 async function refreshToken(request: FastifyRequest, reply: FastifyReply) {
   await request.jwtVerify()
 
+  const { role } = request.user;
   
   const token = await reply.jwtSign(
-    {},
+    {
+      role
+    },
     {
       sign: {
         sub: request.user.sub,
@@ -15,7 +18,9 @@ async function refreshToken(request: FastifyRequest, reply: FastifyReply) {
   );
 
   const refreshToken = await reply.jwtSign(
-    {},
+    {
+      role
+    },
     {
       sign: {
         sub: request.user.sub,
