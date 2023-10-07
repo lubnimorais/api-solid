@@ -26,6 +26,19 @@ jobs:
       # ci, vai fazer um yarn intall, mas não vai fazer nenhum interação com o usuário
       # que está digitando o comando. E o yarn install, vai fazer uma interação.
       # Nãi vai fazer nenhuma pergunta, não vai atualizar versão, não vai mexer no package-lock.json
-      - run: npm ci
+      # Porém npm ci é para projeto construido com o NPM
+      # Para projetos contruídos com o Yarn o comaando é: yarn install --frozen-lockfile
+
+      # Nota: O "npm ci" é usado para instalar as dependências exatamente como estão 
+      # especificadas no arquivo package-lock.json, ignorando qualquer alteração no 
+      # arquivo package.json. O equivalente no Yarn, "--frozen-lockfile", também garante 
+      # que as dependências sejam instaladas exatamente como estão no arquivo yarn.lock, 
+      # sem levar em consideração qualquer alteração no arquivo package.json. Isso ajuda 
+      #  garantir que as dependências sejam instaladas de forma consistente, especialmente 
+      # m ambientes de produção ou quando você deseja replicar exatamente o conjunto de 
+      # dependências de um projeto em diferentes máquinas.
+
+      # - run: npm ci
+      - run: yarn install --frozen-lockfile
 
       - run: yarn test
