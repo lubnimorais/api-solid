@@ -17,10 +17,10 @@ jobs:
         ports:
           - 5432:5432
         # VARIÁVEIS AMBIENTE
-        environment:
-          - POSTGRESQL_USERNAME=postgres
-          - POSTGRESQL_PASSWORD=docker
-          - POSTGRESQL_DATABASE=apisolid
+        env:
+          POSTGRESQL_USERNAME: postgres
+          POSTGRESQL_PASSWORD: docker
+          POSTGRESQL_DATABASE: apisolid
     
     # Ações/passos que serão executadas
     steps:
@@ -53,4 +53,4 @@ jobs:
         # Setando variáveis ambiente
         env:
           JWT_SECRET: testing
-          DATABASE_URL: "postgresql://postgres:docker@localhost:5432/apisolid?schema=public"
+          DATABASE_URL: "postgresql://postgres:docker@localhost:5432/apisolid?schema: public"
