@@ -11,9 +11,10 @@
     "test:create-prisma-environment": "sudo npm link ./prisma/vitest-environment-prisma",
     "test:install-prisma-environment": "sudo npm link vitest-environment-prisma",
     "test": "vitest run src/**/use-cases/**",
-    "test:watch": "vitest run src/**/use-cases/**",
+    "test:watch": "vitest src/**/use-cases/**",
     "pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment",
     "test:e2e": "vitest run src/**/infra/http/controllers/**",
+    "test:e2e:watch": "vitest src/**/infra/http/controllers/**",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
   },

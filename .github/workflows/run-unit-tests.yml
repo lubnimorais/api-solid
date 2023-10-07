@@ -1,0 +1,31 @@
+# Nome do workflow
+name: Run Unit Tests
+
+# Quando queremos que seja executado o workflow 
+# Toda fez que houver push no repositório executa
+on: [push]
+
+# Pode configurar vários trabalhos que queremos que sejam executados
+jobs:
+  # Trabalho a ser executado
+  run-unit-tests: 
+    # Nome do job
+    name: Run Unit Tests
+    # Queremos executar dentro de uma máquina Ubuntu usando a última versão
+    runs-on: ubuntu-latest
+
+    # Ações/passos que serão executadas
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      # ci, vai fazer um yarn intall, mas não vai fazer nenhum interação com o usuário
+      # que está digitando o comando. E o yarn install, vai fazer uma interação.
+      # Nãi vai fazer nenhuma pergunta, não vai atualizar versão, não vai mexer no package-lock.json
+      - run: yarn ci
+
+      - run: yarn test
